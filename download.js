@@ -24,8 +24,6 @@ module.exports = function (config, env, options) {
     getSchema(config.api_id, env);
     getTypes(config.api_id, env);
 
-    // getResolvers(config.api_id, env);
-
 };
 
 function getTypes(apiId, savePath) {
@@ -40,11 +38,29 @@ function getTypes(apiId, savePath) {
 
         for (let i = 0; i < data.types.length; i++) {
             let t = data.types[i];
-            console.log("Type: ", t.name);
+            getResolvers(apiId, t.name, savePath)
+        }
+    });
+}
+
+
+function getResolvers(apiId, typeName, savePath) {
+    // get graph info
+    appsync.listResolvers({
+        apiId: apiId,
+        typeName: typeName
+    }, function (err, data) {
+        if (err) {
+            return console.log(err, err.stack);
+        }
+
+        // skip empty
+        if (JSON.stringify(data.resolvers) === "[]") {
+            return
         }
 
         // write file
-        fs.writeFile(path.join(savePath + "./Types.graphql"), data, function (err) {
+        fs.writeFile(path.join(savePath + "./" + "resolvers." + typeName + ".json"), JSON.stringify(data.resolvers), function (err) {
             if (err) {
                 return console.log(err);
             }
