@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "aws-sdk": "^2.188.0",
-    "commander": "^2.14.0"
+    "commander": "^2.14.0",
+    "mkdirp": "^0.5.1"
   }
 }

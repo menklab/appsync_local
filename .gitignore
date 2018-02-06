@@ -1,2 +1,4 @@
 .idea
 node_modules
+.appsync-local.config.local.json
+.generate_token_command

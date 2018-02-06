@@ -1,0 +1,7 @@
+{
+  "access_key_id": "<access key>",
+  "secret_access_key": "<secret key>",
+  "region": "us-east-1",
+  "api_id": "<API ID>",
+  "working_directory": "./GraphQL"
+}
