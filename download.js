@@ -36,9 +36,20 @@ function getTypes(apiId, savePath) {
             return console.log(err, err.stack);
         }
 
+        // loop through each type
         for (let i = 0; i < data.types.length; i++) {
             let t = data.types[i];
-            getResolvers(apiId, t.name, savePath)
+            let typePath = path.join(savePath, t.name);
+            mkdirp.sync(typePath);
+
+            // write file
+            fs.writeFile(path.join(typePath, t.name + ".graphqls"), t.definition, function (err) {
+                if (err) {
+                    return console.log(err);
+                }
+
+                getResolvers(apiId, t.name, typePath)
+            });
         }
     });
 }
@@ -59,12 +70,40 @@ function getResolvers(apiId, typeName, savePath) {
             return
         }
 
-        // write file
-        fs.writeFile(path.join(savePath + "./" + "resolvers." + typeName + ".json"), JSON.stringify(data.resolvers), function (err) {
-            if (err) {
-                return console.log(err);
-            }
-        });
+        let resolverPath = path.join(savePath, "resolvers");
+        mkdirp.sync(resolverPath);
+
+        // loop through resolvers
+        for (let i=0; i<data.resolvers.length; i++) {
+
+            let resolver = data.resolvers[i];
+
+            // write request map
+            fs.writeFile(path.join(resolverPath, resolver.fieldName + ".request.map.json.vm"), resolver.requestMappingTemplate, function (err) {
+                if (err) {
+                    return console.log(err);
+                }
+            });
+
+            // write response map
+            fs.writeFile(path.join(resolverPath, resolver.fieldName + ".response.map.json.vm"), resolver.responseMappingTemplate, function (err) {
+                if (err) {
+                    return console.log(err);
+                }
+            });
+
+            // write config file
+            // remove keys that were already written
+            delete resolver.requestMappingTemplate
+            delete resolver.responseMappingTemplate
+            fs.writeFile(path.join(resolverPath, resolver.fieldName + ".config.json"), JSON.stringify(resolver), function (err) {
+                if (err) {
+                    return console.log(err);
+                }
+            });
+        }
+
+
     });
 }
 
@@ -97,13 +136,19 @@ function getDataSources(apiId, savePath) {
             return console.log(err, err.stack);
         }
 
+        // for each datasource write it out
+        for (let i = 0; i < data.dataSources.length; i++) {
+            let source = data.dataSources[i];
+            let datasourcePath = path.join(savePath, "datasources");
+            mkdirp.sync(datasourcePath);
+            // write file
+            fs.writeFile(path.join(datasourcePath, source.name + ".json"), JSON.stringify(source), function (err) {
+                if (err) {
+                    return console.log(err);
+                }
+            });
+        }
 
-        // write file
-        fs.writeFile(path.join(savePath + "./Datasources.json"), JSON.stringify(data.dataSources), function (err) {
-            if (err) {
-                return console.log(err);
-            }
-        });
     });
 }
 
