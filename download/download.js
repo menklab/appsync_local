@@ -2,6 +2,8 @@ const fs = require("fs");
 const AWS = require("aws-sdk");
 const path = require("path");
 const mkdirp = require("mkdirp");
+const { StringDecoder } = require('string_decoder');
+
 
 let appsync = {};
 
@@ -79,14 +81,16 @@ function getResolvers(apiId, typeName, savePath) {
             let resolver = data.resolvers[i];
 
             // write request map
-            fs.writeFile(path.join(resolverPath, resolver.fieldName + ".request.map.json.vm"), resolver.requestMappingTemplate, function (err) {
+            let requestPath = path.join(resolverPath, resolver.fieldName + ".resolver.request.json.vm");
+            fs.writeFile(requestPath, resolver.requestMappingTemplate, function (err) {
                 if (err) {
                     return console.log(err);
                 }
             });
 
             // write response map
-            fs.writeFile(path.join(resolverPath, resolver.fieldName + ".response.map.json.vm"), resolver.responseMappingTemplate, function (err) {
+            let responsePath = path.join(resolverPath, resolver.fieldName + ".resolver.response.json.vm");
+            fs.writeFile(responsePath, resolver.responseMappingTemplate, function (err) {
                 if (err) {
                     return console.log(err);
                 }
@@ -94,9 +98,9 @@ function getResolvers(apiId, typeName, savePath) {
 
             // write config file
             // remove keys that were already written
-            delete resolver.requestMappingTemplate
-            delete resolver.responseMappingTemplate
-            fs.writeFile(path.join(resolverPath, resolver.fieldName + ".config.json"), JSON.stringify(resolver, null, 2), function (err) {
+            resolver.requestMappingTemplate = requestPath;
+            resolver.responseMappingTemplate = responsePath;
+            fs.writeFile(path.join(resolverPath, resolver.fieldName + ".resolver.config.json"), JSON.stringify(resolver, null, 2), function (err) {
                 if (err) {
                     return console.log(err);
                 }

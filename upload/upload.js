@@ -2,6 +2,7 @@ const AWS = require("aws-sdk");
 const path = require("path");
 const {fileLoader, mergeTypes} = require('merge-graphql-schemas');
 const uploadDatasources = require("./datasources");
+const uploadResolvers = require("./resolvers");
 
 let appsync = {};
 
@@ -23,6 +24,7 @@ module.exports = function (config, env, options) {
     // upload schema
     uploadSchema(config.api_id, schema, function () {
         uploadDatasources(config.api_id, env, appsync);
+        uploadResolvers(config.api_id, env, appsync);
     });
 
 };
