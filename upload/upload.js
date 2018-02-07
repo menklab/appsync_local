@@ -31,18 +31,16 @@ module.exports = function (config, env, options) {
 
 
 function uploadSchema(apiId, schema, cb) {
+    console.log('updating schema');
     appsync.startSchemaCreation({
         apiId: apiId,
         definition: schema
     }, function(err, data) {
         if (err) return console.log(err, err.stack);
 
-        getSchemaCreationStatus(apiId, function() {
-            cb();
-        })
+        getSchemaCreationStatus(apiId, cb)
 
     });
-    cb();
 }
 
 function getSchemaCreationStatus(apiId, cb) {
@@ -53,12 +51,12 @@ function getSchemaCreationStatus(apiId, cb) {
         if (err) return console.log(err, err.stack);
 
         if (data.status === "PROCESSING") {
-            console.log("PROCESSING");
+            console.log("- waiting on aws");
             setTimeout(function () {
                 getSchemaCreationStatus(apiId, cb);
             }, 1000)
         } else if (data.status === "DELETING") {
-            console.log("DELETING");
+            console.log("- waiting on aws");
             setTimeout(function () {
                 getSchemaCreationStatus(apiId, cb);
             }, 1000)

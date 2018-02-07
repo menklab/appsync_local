@@ -17,6 +17,7 @@ function uploadDatasources(apiId, env, appsync) {
 
         // if there is a dsArn then try to update
         if (dsC.dataSourceArn) {
+            console.log("updating datesource: ", dsC.name);
             dsC.apiId = apiId;
             delete dsC.dataSourceArn;
             appsync.updateDataSource(dsC, function(err, newContents) {
@@ -32,6 +33,7 @@ function uploadDatasources(apiId, env, appsync) {
         }
         // otherwise create new
         else {
+            console.log("creating datesource: ", dsC.name);
             dsC.apiId = apiId;
             appsync.createDataSource(dsC, function(err, newContents) {
                 if (err) return console.log(err, err.stack);
