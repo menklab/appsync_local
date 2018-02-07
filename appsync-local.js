@@ -1,4 +1,4 @@
-// import entire SDK
+#!/usr/bin/env node
 
 const download = require("./download/download.js");
 const upload = require("./upload/upload.js");
