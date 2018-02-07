@@ -1,4 +1,4 @@
-##appsync-local
+appsync-local
 
 appsync-local is a tool designed to make local appsync development easier. 
 
