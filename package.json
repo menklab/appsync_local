@@ -4,6 +4,11 @@
   "dependencies": {
     "aws-sdk": "^2.188.0",
     "commander": "^2.14.0",
-    "mkdirp": "^0.5.1"
+    "mkdirp": "^0.5.1",
+    "graphql": "^0.11.7",
+    "graphql-tag": "^2.5.0"
+  },
+  "devDependencies": {
+    "merge-graphql-schemas": "^1.4.0"
   }
 }

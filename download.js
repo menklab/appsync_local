@@ -142,7 +142,7 @@ function getDataSources(apiId, savePath) {
             let datasourcePath = path.join(savePath, "datasources");
             mkdirp.sync(datasourcePath);
             // write file
-            fs.writeFile(path.join(datasourcePath, source.name + ".json"), JSON.stringify(source), function (err) {
+            fs.writeFile(path.join(datasourcePath, source.name + ".ds.json"), JSON.stringify(source), function (err) {
                 if (err) {
                     return console.log(err);
                 }

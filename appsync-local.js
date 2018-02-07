@@ -1,6 +1,7 @@
 // import entire SDK
 
 const download = require("./download.js");
+const upload = require("./upload.js");
 const program = require('commander');
 const fs = require('fs');
 
@@ -26,8 +27,9 @@ program
     .command('upload [path]')
     .description("Upload to api from input directory")
     .action(function (env, options) {
-        console.log("upload selected");
-
+        getConfig(program.config, function(config) {
+            upload(config, env, options);
+        })
     });
 
 program
@@ -38,11 +40,6 @@ if (program.verbose) {
     debug = true;
     console.log("Verbosity On\n");
 }
-
-if (program.upload) {
-    console.log("upload")
-}
-
 
 function getConfig(path, cb) {
 
