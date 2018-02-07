@@ -1,7 +1,7 @@
 // import entire SDK
 
-const download = require("./download.js");
-const upload = require("./upload.js");
+const download = require("./download/download.js");
+const upload = require("./upload/upload.js");
 const program = require('commander');
 const fs = require('fs');
 

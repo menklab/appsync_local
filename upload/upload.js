@@ -1,9 +1,7 @@
-const fs = require("fs");
 const AWS = require("aws-sdk");
 const path = require("path");
-const mkdirp = require("mkdirp");
-const { fileLoader, mergeTypes } = require ('merge-graphql-schemas');
-
+const {fileLoader, mergeTypes} = require('merge-graphql-schemas');
+const uploadDatasources = require("./datasources");
 
 let appsync = {};
 
@@ -23,44 +21,43 @@ module.exports = function (config, env, options) {
     let schema = mergeTypes(typesArray);
 
     // upload schema
-    uploadSchema(config.api_id, schema, function() {
-
-        // sync data sources
-
+    uploadSchema(config.api_id, schema, function () {
+        uploadDatasources(config.api_id, env, appsync);
     });
 
 };
 
 
 function uploadSchema(apiId, schema, cb) {
-    appsync.startSchemaCreation({
-        apiId: apiId,
-        definition: schema
-    }, function(err, data) {
-        if (err) return console.log(err, err.stack);
-
-        getSchemaCreationStatus(apiId, function() {
-            cb();
-        })
-
-    });
+    // appsync.startSchemaCreation({
+    //     apiId: apiId,
+    //     definition: schema
+    // }, function(err, data) {
+    //     if (err) return console.log(err, err.stack);
+    //
+    //     getSchemaCreationStatus(apiId, function() {
+    //         cb();
+    //     })
+    //
+    // });
+    cb();
 }
 
 function getSchemaCreationStatus(apiId, cb) {
 
     appsync.getSchemaCreationStatus({
         apiId: apiId
-    }, function(err, data) {
+    }, function (err, data) {
         if (err) return console.log(err, err.stack);
 
         if (data.status === "PROCESSING") {
             console.log("PROCESSING");
-            setTimeout(function() {
+            setTimeout(function () {
                 getSchemaCreationStatus(apiId, cb);
             }, 1000)
         } else if (data.status === "DELETING") {
             console.log("DELETING");
-            setTimeout(function() {
+            setTimeout(function () {
                 getSchemaCreationStatus(apiId, cb);
             }, 1000)
         } else {

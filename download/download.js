@@ -96,7 +96,7 @@ function getResolvers(apiId, typeName, savePath) {
             // remove keys that were already written
             delete resolver.requestMappingTemplate
             delete resolver.responseMappingTemplate
-            fs.writeFile(path.join(resolverPath, resolver.fieldName + ".config.json"), JSON.stringify(resolver), function (err) {
+            fs.writeFile(path.join(resolverPath, resolver.fieldName + ".config.json"), JSON.stringify(resolver, null, 2), function (err) {
                 if (err) {
                     return console.log(err);
                 }
@@ -142,7 +142,7 @@ function getDataSources(apiId, savePath) {
             let datasourcePath = path.join(savePath, "datasources");
             mkdirp.sync(datasourcePath);
             // write file
-            fs.writeFile(path.join(datasourcePath, source.name + ".ds.json"), JSON.stringify(source), function (err) {
+            fs.writeFile(path.join(datasourcePath, source.name + ".ds.json"), JSON.stringify(source, null, 2), function (err) {
                 if (err) {
                     return console.log(err);
                 }
@@ -163,7 +163,7 @@ function getGraphQLInfo(apiId, savePath) {
 
 
         // write file
-        fs.writeFile(path.join(savePath + "./AppSync.json"), JSON.stringify(data.graphqlApi), function (err) {
+        fs.writeFile(path.join(savePath + "./AppSync.json"), JSON.stringify(data.graphqlApi, null, 2), function (err) {
             if (err) {
                 return console.log(err);
             }
