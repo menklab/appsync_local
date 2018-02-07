@@ -10,6 +10,8 @@ By following a basic naming convention and a basic config file, appsync-local wi
 ## Basic Usage
 Intended to be utilized with IDEs compatible with [js-graphql-language-service](https://github.com/jimkyndemeyer/js-graphql-language-service) and [Apache Velocity Template Language (VTL)](http://velocity.apache.org/). Curretly tested with and developed with [IntelliJ IDEA](https://www.jetbrains.com/idea/) and [js-graphql-intellij-plugin](https://github.com/jimkyndemeyer/js-graphql-intellij-plugin)
 
+Utilizing an AWS example is a good way to gain an understanding of how this tool works. Once an example project is deployed, it can be downloaded with the command below. This gives a great starting point for a syntax to build your project from. It can also be modified and uploaded to test how to tool works. 
+
 ##### Download
 `node appsync-local.js --config .appsync-local.config.local.json download GraphCQL/`
 

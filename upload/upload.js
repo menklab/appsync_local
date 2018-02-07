@@ -31,17 +31,17 @@ module.exports = function (config, env, options) {
 
 
 function uploadSchema(apiId, schema, cb) {
-    // appsync.startSchemaCreation({
-    //     apiId: apiId,
-    //     definition: schema
-    // }, function(err, data) {
-    //     if (err) return console.log(err, err.stack);
-    //
-    //     getSchemaCreationStatus(apiId, function() {
-    //         cb();
-    //     })
-    //
-    // });
+    appsync.startSchemaCreation({
+        apiId: apiId,
+        definition: schema
+    }, function(err, data) {
+        if (err) return console.log(err, err.stack);
+
+        getSchemaCreationStatus(apiId, function() {
+            cb();
+        })
+
+    });
     cb();
 }
 

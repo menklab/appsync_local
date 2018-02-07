@@ -20,6 +20,7 @@ function uploadResolvers(apiId, env, appsync) {
 
         // if there is a rArn then try to update
         if (rC.resolverArn) {
+            console.log("updating resolver: ", rC.fieldName);
             rC.apiId = apiId;
             delete rC.resolverArn;
             appsync.updateResolver(rC, function(err, newContents) {
@@ -30,6 +31,7 @@ function uploadResolvers(apiId, env, appsync) {
         }
         // otherwise create new
         else {
+            console.log("creating resolver: ", rC.fieldName);
             rC.apiId = apiId;
             appsync.createResolver(rC, function(err, newContents) {
                 if (err) return console.log(err, err.stack);
@@ -41,33 +43,33 @@ function uploadResolvers(apiId, env, appsync) {
 }
 
 function write3PartFile(resolverPath, resolver) {
-//     let fileTemplatePath = resolverPath.replace(".config.json", "");
-//
-//     // write request map
-//     let requestPath = fileTemplatePath + ".request.json.vm";
-//     fs.writeFile(requestPath, resolver.requestMappingTemplate, function (err) {
-//         if (err) {
-//             return console.log(err);
-//         }
-//     });
-//
-//     // write response map
-//     let responsePath = fileTemplatePath + ".response.json.vm";
-//     fs.writeFile(responsePath, resolver.responseMappingTemplate, function (err) {
-//         if (err) {
-//             return console.log(err);
-//         }
-//     });
-//
-//     // write config file
-//     // remove keys that were already written
-//     resolver.requestMappingTemplate = requestPath;
-//     resolver.responseMappingTemplate = responsePath;
-//     fs.writeFile(path.join(resolverPath + ".config.json"), JSON.stringify(resolver, null, 2), function (err) {
-//         if (err) {
-//             return console.log(err);
-//         }
-//     });
+    let fileTemplatePath = resolverPath.replace(".config.json", "");
+
+    // write request map
+    let requestPath = fileTemplatePath + ".request.json.vm";
+    fs.writeFile(requestPath, resolver.requestMappingTemplate, function (err) {
+        if (err) {
+            return console.log(err);
+        }
+    });
+
+    // write response map
+    let responsePath = fileTemplatePath + ".response.json.vm";
+    fs.writeFile(responsePath, resolver.responseMappingTemplate, function (err) {
+        if (err) {
+            return console.log(err);
+        }
+    });
+
+    // write config file
+    // remove keys that were already written
+    resolver.requestMappingTemplate = requestPath;
+    resolver.responseMappingTemplate = responsePath;
+    fs.writeFile(path.join(resolverPath), JSON.stringify(resolver, null, 2), function (err) {
+        if (err) {
+            return console.log(err);
+        }
+    });
 }
 
 module.exports = uploadResolvers;
