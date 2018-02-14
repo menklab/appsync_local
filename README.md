@@ -13,7 +13,7 @@ Intended to be utilized with IDEs compatible with [js-graphql-language-service](
 Utilizing an AWS example is a good way to gain an understanding of how this tool works. Once an example project is deployed, it can be downloaded with the command below. This gives a great starting point for a syntax to build your project from. It can also be modified and uploaded to test how to tool works. 
 
 ##### Download
-`node appsync-local.js --config .appsync-local.config.local.json download GraphCQL/`
+`node appsync-local.js --config .appsync-local.config.local.json download GraphQL/`
 
 Download an appsync schema, datasources, resolvers, and types into a semi-modular file structure. This is not indented to be directly compatible with upload, but rather, enable users to download and further customize/organize their project for the first time. **Think of this as a first-time use only.
 
