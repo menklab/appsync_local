@@ -1,5 +1,9 @@
 # appsync-local
 
+## No Longer Supported
+The package will no longer be supported. Recommendation is to use [serverless-appysync-plugin](https://github.com/sid88in/serverless-appsync-plugin) instead.
+
+## Description
 appsync-local is a tool designed to make local appsync development easier. 
 
 By following a basic naming convention and a basic config file, appsync-local will upload a modular AppSync application in a single command.
