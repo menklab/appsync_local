@@ -1,6 +1,6 @@
 # appsync-local
 
-## No Longer Supported
+#### No Longer Supported
 The package will no longer be supported. Recommendation is to use [serverless-appysync-plugin](https://github.com/sid88in/serverless-appsync-plugin) instead.
 
 ## Description
